@@ -1,4 +1,4 @@
-# May LeetCoding Challenge
+# Dynamic Programming
 
 1) https://leetcode.com/problems/fibonacci-number/ </br>
 509. Fibonacci Number
