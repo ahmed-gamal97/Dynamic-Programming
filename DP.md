@@ -240,3 +240,33 @@ class Solution:
 ```
 ### Complexity: O(n) , space: O(1)
 -----------------------
+9) https://leetcode.com/problems/jump-game-ii/ </br>
+45. Jump Game II
+
+```python
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        
+        # First Accepted Sol
+        length = len(nums)
+        
+        # The test cases are generated such that you can reach nums[n - 1]
+        # if nums[0] == 0:
+        #     return False
+        
+        min_jumps_can_be_reached = [float('inf')] * length
+        min_jumps_can_be_reached[0] = 0
+        
+        for ind,num in enumerate(nums[:-1]):
+            
+            for i in range(ind+1, ind+1+num):
+                if i < length:
+                    min_jumps_can_be_reached[i] = min(min_jumps_can_be_reached[i], min_jumps_can_be_reached[ind] + 1)
+            
+            if min_jumps_can_be_reached[length-1] < float('inf'):
+                return min_jumps_can_be_reached[length-1]
+            
+        return min_jumps_can_be_reached[length-1]
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
