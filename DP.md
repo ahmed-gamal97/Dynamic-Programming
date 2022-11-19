@@ -81,3 +81,111 @@ class Solution:
         return min(min_current_cost[length-2], min_current_cost[length-1])
 ```
 ### Complexity: O(n) , space: O(n)
+-----------------------
+5) https://leetcode.com/problems/house-robber/ </br>
+198. House Robber
+
+```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        
+        length = len(nums)
+        
+        if length == 1:
+            return nums[0]
+        
+        maximum_amount_till_now = [0] * length
+        maximum_amount_till_now[0] = nums[0]
+        maximum_amount_till_now[1] = max(nums[0], nums[1])
+        
+        for i in range(2, length):
+            if maximum_amount_till_now[i-1] == maximum_amount_till_now[i-2]:
+                maximum_amount_till_now[i] = maximum_amount_till_now[i-1] + nums[i]
+            else:
+                maximum_amount_till_now[i] = max(maximum_amount_till_now[i-2] + nums[i], maximum_amount_till_now[i-1])
+    
+        return maximum_amount_till_now[-1]
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
+6) https://leetcode.com/problems/house-robber-ii/ </br>
+213. House Robber II
+
+```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+             
+        length = len(nums)
+        
+        if length == 1:
+            return nums[0]
+        elif length == 2:
+            return max(nums[0], nums[1])
+        
+        def linear_rob(nums):
+            
+            length = len(nums)
+            
+            maximum_amount_till_now = [0] * length
+            maximum_amount_till_now[0] = nums[0]
+            maximum_amount_till_now[1] = max(nums[0], nums[1])
+
+            for i in range(2, length):
+                if maximum_amount_till_now[i-1] == maximum_amount_till_now[i-2]:
+                    maximum_amount_till_now[i] = maximum_amount_till_now[i-1] + nums[i]
+                else:
+                    maximum_amount_till_now[i] = max(maximum_amount_till_now[i-2] + nums[i], maximum_amount_till_now[i-1])
+
+            return maximum_amount_till_now[-1]
+        
+        
+        return max(linear_rob(nums[1:]), linear_rob(nums[0:-1]))
+        
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
+7) https://leetcode.com/problems/delete-and-earn/ </br>
+740. Delete and Earn
+
+```python
+class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        
+        maximum_points = 0
+        
+        # counting the numbers
+        num_freq = {}
+        for num in nums:
+            num_freq[num] = num_freq.get(num, 0) + 1
+        
+        # add numbers that will be added in any case and delete it from the dict
+        for num in nums:
+            if (num+1) not in num_freq and (num-1) not in num_freq:
+                if num in num_freq:
+                    maximum_points += (num*num_freq[num])
+                    del num_freq[num]
+
+        sorted_unique_num = sorted(num_freq.keys())
+        
+        length = len(sorted_unique_num)
+        
+        if length == 0:
+            return maximum_points
+        
+        maximum_amount_till_now = [0] * length
+        maximum_amount_till_now[0] = sorted_unique_num[0] * num_freq[sorted_unique_num[0]]
+        maximum_amount_till_now[1] = sorted_unique_num[1] * num_freq[sorted_unique_num[1]]
+        maximum_amount_till_now[1] = max(maximum_amount_till_now[0], maximum_amount_till_now[1])
+        
+        for i in range(2, length):
+            if sorted_unique_num[i-1] + 1 == sorted_unique_num[i]:
+                maximum_amount_till_now[i] = (sorted_unique_num[i] * num_freq[sorted_unique_num[i]]) + maximum_amount_till_now[i-2]
+                maximum_amount_till_now[i] = max(maximum_amount_till_now[i], maximum_amount_till_now[i-1])
+            else:
+                maximum_amount_till_now[i] = (sorted_unique_num[i] * num_freq[sorted_unique_num[i]]) + maximum_amount_till_now[i-1]
+        
+        return maximum_amount_till_now[-1] + maximum_points
+        
+```
+### Complexity: O(nlog(n)) , space: O(n)
+-----------------------
