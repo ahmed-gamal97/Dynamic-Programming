@@ -189,3 +189,54 @@ class Solution:
 ```
 ### Complexity: O(nlog(n)) , space: O(n)
 -----------------------
+8) https://leetcode.com/problems/jump-game/ </br>
+55. Jump Game
+
+```python
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        
+        # Samrter
+        length = len(nums)
+        max_reach = 0
+        
+        for ind, num in enumerate(nums):
+            if max_reach < ind:
+                return False
+            elif max_reach >= length-1:
+                return True
+            max_reach = max(max_reach, ind+num)
+        
+        
+        # First Accepted Sol
+        length = len(nums)
+        
+        if length == 1:
+            return True
+        
+        if nums[0] == 0:
+            return False
+        
+        can_be_reached = [0] * length
+        can_be_reached[0] = 1
+        
+        for ind,num in enumerate(nums[:-1]):
+            
+            if can_be_reached[ind] == 0:
+                return False
+            
+            for i in range(ind+1, ind+1+num):
+                if i < length:
+                    can_be_reached[i] = 1
+                else:
+                    break
+            
+            if can_be_reached[length - 1] == 1:
+                return True
+        
+        
+        return False
+        
+```
+### Complexity: O(n) , space: O(1)
+-----------------------
