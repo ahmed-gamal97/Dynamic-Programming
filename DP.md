@@ -270,3 +270,88 @@ class Solution:
 ```
 ### Complexity: O(n) , space: O(n)
 -----------------------
+10) https://leetcode.com/problems/maximum-subarray/ </br>
+53. Maximum Subarray
+
+```python
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        if not nums:
+            return 0
+        
+        length = len(nums)
+        
+        dp = [0] * length
+        dp[0] = nums[0]
+        
+        
+        for i in range(1, length):
+            dp[i] = max(nums[i], dp[i-1] + nums[i])
+            
+            
+        return max(dp)
+        
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
+11) https://leetcode.com/problems/maximum-sum-circular-subarray/ </br>
+918. Maximum Sum Circular Subarray
+
+```python
+class Solution(object):
+    def maxSubarraySumCircular(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+    
+        def maxSubArray(nums):
+
+            if not nums:
+                return 0
+
+            length = len(nums)
+
+            dp = [0] * length
+            dp[0] = nums[0]
+
+            for i in range(1, length):
+                dp[i] = max(nums[i], dp[i-1] + nums[i])
+
+            return max(dp)
+        
+        # SOL 2
+        length = len(nums)
+        
+        nums_sum = sum(nums)
+        
+        count_negative_nums = sum([1 if num < 0 else 0 for num in nums])
+        if count_negative_nums == length:
+            return max(nums)
+        
+        nums_inverted = [num*-1 for num in nums]
+        dp = [0] * length
+        dp[0] = nums_inverted[0]
+        
+        for i in range(1, length):
+            dp[i] = max(nums_inverted[i], dp[i-1] + nums_inverted[i])
+        
+        return max(nums_sum - (-max(dp)), maxSubArray(nums))
+    
+        # SOL 1 but TLE
+        length = len(nums)
+        
+        result = float('-inf')
+        
+        for i in range(length):
+            result = max(result, maxSubArray(nums[i:length] + nums[:i]))
+            
+        return result
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
