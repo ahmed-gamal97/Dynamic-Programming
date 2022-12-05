@@ -355,3 +355,88 @@ class Solution(object):
 ```
 ### Complexity: O(n) , space: O(n)
 -----------------------
+12) https://leetcode.com/problems/maximum-length-of-subarray-with-positive-product/ </br>
+1567. Maximum Length of Subarray With Positive Product
+
+```python
+class Solution(object):
+    def getMaxLen(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        nums_splitted = [[]]
+        
+        for ind, num in enumerate(nums):
+            if num == 0:
+                if nums_splitted[-1]:
+                    nums_splitted.append([])
+            else:
+                nums_splitted[-1].append(num)
+        
+        # case when last element is 0
+        if not nums_splitted[-1]:
+            nums_splitted = nums_splitted[:-1]
+        
+        if not nums_splitted:
+            return 0
+        
+        nonzeros_subarray_max_product_len = []
+        
+        for num_array in nums_splitted:
+            
+            negatives_indcies = [ind for ind,num in enumerate(num_array) if num < 0]
+            
+            negatives_count = len(negatives_indcies)
+            
+            if negatives_count % 2 == 0:
+                nonzeros_subarray_max_product_len.append(len(num_array))
+            else:
+                
+                if negatives_indcies[0] < len(num_array) - 1 - negatives_indcies[-1]:
+                    ind_to_exclude = negatives_indcies[0]
+                    nonzeros_subarray_max_product_len.append(len(num_array[ind_to_exclude+1:]))
+                else:
+                    ind_to_exclude = negatives_indcies[-1]
+                    nonzeros_subarray_max_product_len.append(len(num_array[0: ind_to_exclude]))
+                
+        return max(nonzeros_subarray_max_product_len)
+        
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
+13) https://leetcode.com/problems/maximum-product-subarray/ </br>
+152. Maximum Product Subarray   
+
+```python
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        '''
+        Why do we need to maintain the minimum product while we are asked for a maximum? The fact is that elements in nums can be negative, so it isi possible that for some negative elements the previous min possible product can turn the current product into a greater value.
+        '''
+        
+        curr_min = 1
+        curr_max = 1
+        
+        res = nums[0]
+        
+        for n in nums:
+            
+            vals = (n , curr_min*n, curr_max*n)
+            
+            curr_min = min(vals)
+            curr_max = max(vals)
+            
+            res = max(res, curr_max)
+            
+        return res
+        
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
