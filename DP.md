@@ -440,3 +440,40 @@ class Solution(object):
 ```
 ### Complexity: O(n) , space: O(n)
 -----------------------
+14) https://leetcode.com/problems/best-sightseeing-pair/ </br>
+1014. Best Sightseeing Pair
+
+```python
+class Solution(object):
+    def maxScoreSightseeingPair(self, values):
+        """
+        :type values: List[int]
+        :rtype: int
+        """
+        
+        # Smarter
+        maximum_score = 0
+        
+        max_left = values[0] + 0
+
+        for ind, num in enumerate(values[1:], start = 1):
+            maximum_score = max(maximum_score, max_left + num - ind)
+            max_left = max(max_left, ind + num)
+                
+        return maximum_score
+            
+        # Brute force
+        maximum_score = 0
+        
+        length = len(values)
+        
+        for i in range(length):
+            for j in range(i+1, length):
+                score = values[i] + values[j] + i - j
+                maximum_score = max(score, maximum_score)
+                
+        return maximum_score
+        
+```
+### Complexity: O(n) , space: O(1)
+-----------------------
