@@ -477,3 +477,28 @@ class Solution(object):
 ```
 ### Complexity: O(n) , space: O(1)
 -----------------------
+15) https://leetcode.com/problems/best-time-to-buy-and-sell-stock/ </br>
+121. Best Time to Buy and Sell Stock
+
+```python
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        
+        minimum_till_now = prices[0]
+        
+        best_profits = [0] * len(prices)
+        
+        for ind, price in enumerate(prices[1:], start = 1):
+            best_profits[ind] = price - minimum_till_now
+            minimum_till_now = min(minimum_till_now, price)
+            
+        
+        return max(best_profits)
+        
+```
+### Complexity: O(n) , space: O(n)
+-----------------------
